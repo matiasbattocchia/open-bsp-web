@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — OpenBSP</title>
+<meta name="description" content="Privacy Policy for OpenBSP (web.openbsp.dev).">
+<style>
+  :root {
+    --primary: #C26A3D;
+    --fg: #1a1a1a;
+    --muted: #666;
+    --bg: #fafafa;
+    --border: #e5e5e5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --fg: #f0f0f0; --muted: #999; --bg: #0f0f0f; --border: #2a2a2a; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: var(--fg);
+    background: var(--bg);
+    line-height: 1.7;
+  }
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 60px 24px 40px;
+  }
+  h1 { font-size: 36px; margin: 0 0 8px; letter-spacing: -0.02em; color: var(--primary); }
+  h2 { font-size: 20px; margin: 40px 0 8px; }
+  .updated { color: var(--muted); margin: 0 0 32px; font-size: 14px; }
+  p, ul { font-size: 16px; }
+  ul { padding-left: 24px; }
+  li { margin-bottom: 6px; }
+  a { color: var(--primary); }
+  .back { display: inline-block; margin-bottom: 24px; color: var(--muted); text-decoration: none; font-size: 14px; }
+  .back:hover { color: var(--primary); }
+  footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 14px; color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="/">← Back to OpenBSP</a>
+  <h1>Privacy Policy</h1>
+  <p class="updated">Last updated: April 15, 2026</p>
+
+  <p>This policy describes how the hosted version of OpenBSP at <a href="https://web.openbsp.dev">web.openbsp.dev</a> handles your data. If you self-host OpenBSP, this policy does not apply — you control your own deployment.</p>
+
+  <h2>What we collect</h2>
+  <ul>
+    <li><strong>Account information</strong> — When you sign in with Google, we receive your email address, name, and profile picture.</li>
+    <li><strong>Organization data</strong> — Any organizations, contacts, agents, templates, API keys, and webhooks you create.</li>
+    <li><strong>WhatsApp messages</strong> — Messages sent and received through WhatsApp accounts you connect, including text, media, and metadata (sender, timestamp, delivery status).</li>
+    <li><strong>Usage data</strong> — Logs of API calls, Edge Function invocations, and billing events for operating the service.</li>
+  </ul>
+
+  <h2>How we use it</h2>
+  <ul>
+    <li>Routing WhatsApp messages between Meta's WhatsApp Business API and your AI agents or team members.</li>
+    <li>Storing your conversations so you can access them from the web interface.</li>
+    <li>Billing and usage reporting.</li>
+    <li>Troubleshooting and security.</li>
+  </ul>
+
+  <h2>Third parties</h2>
+  <p>We use the following processors to operate the service:</p>
+  <ul>
+    <li><strong>Supabase</strong> — hosts the database, authentication, and Edge Functions.</li>
+    <li><strong>Meta (WhatsApp)</strong> — delivers messages to and from your WhatsApp accounts.</li>
+    <li><strong>Google</strong> — provides sign-in and, optionally, Gemini-based media preprocessing for accounts that enable it.</li>
+    <li><strong>LLM providers</strong> (OpenAI, Anthropic, Google, Groq, etc.) — only when you configure an AI agent to use them. Messages sent to those providers are subject to their own privacy terms.</li>
+  </ul>
+
+  <h2>Your rights</h2>
+  <ul>
+    <li><strong>Access</strong> — Your data is available through the web interface at any time.</li>
+    <li><strong>Export</strong> — You can export your data via the REST API.</li>
+    <li><strong>Deletion</strong> — You can delete your organization at any time, which removes associated contacts, conversations, and messages. Request full account deletion by contacting us.</li>
+  </ul>
+
+  <h2>Cookies</h2>
+  <p>We use session cookies for authentication. We do not use tracking or advertising cookies.</p>
+
+  <h2>Data retention</h2>
+  <p>Data is retained for as long as your account is active. Deleted data is removed from active databases immediately; backups may retain data for up to 30 days.</p>
+
+  <h2>Contact</h2>
+  <p>For privacy questions, contact us through the <a href="https://chat.whatsapp.com/Ch6AwZizSDt5quzHodcYh5">WhatsApp Community</a> or by opening an issue on <a href="https://github.com/matiasbattocchia/open-bsp-api/issues">GitHub</a>.</p>
+
+  <h2>Changes</h2>
+  <p>We may update this policy. Material changes will be announced in the community channel.</p>
+
+  <footer>
+    <a href="/">OpenBSP</a>
+  </footer>
+</main>
+</body>
+</html>
