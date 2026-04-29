@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OpenBSP — Open-source alternative to Twilio for WhatsApp Business</title>
-<meta name="description" content="Self-hostable WhatsApp Business Platform. Connects directly to Meta's Cloud API. No per-message markup. Multi-tenant, AI-agent ready. Built on Supabase and Deno.">
+<meta name="description" content="Self-hostable WhatsApp Business Platform. Connects directly to Meta's Cloud API. Multi-tenant, AI-agent ready. Built on Supabase and Deno.">
 <meta name="keywords" content="whatsapp business api, twilio alternative, open source whatsapp, self-hosted whatsapp, whatsapp cloud api, meta business platform, whatsapp ai agents">
 <style>
   :root {
@@ -33,66 +33,75 @@
   }
   h1 { font-size: 48px; margin: 0 0 8px; letter-spacing: -0.02em; color: var(--primary); }
   h2 { font-size: 22px; margin: 48px 0 16px; letter-spacing: -0.01em; }
-  .tagline { font-size: 19px; color: var(--muted); margin: 0 0 20px; }
+  .tagline { font-size: 19px; color: var(--muted); margin: 0 0 32px; }
   p { font-size: 16px; }
-  code { background: var(--code-bg); padding: 2px 6px; border-radius: 4px; font-size: 14px; font-family: ui-monospace, "SF Mono", Menlo, monospace; }
 
-  .badges { margin: 0 0 32px; }
-  .badges img { vertical-align: middle; margin-right: 6px; }
-
-  .ctas { margin: 24px 0 32px; }
+  .ctas {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 24px 0 32px;
+  }
   .cta {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     padding: 11px 18px;
     background: var(--primary);
     color: white;
     border-radius: 8px;
     text-decoration: none;
     font-weight: 500;
-    margin-right: 8px;
-    margin-bottom: 8px;
   }
   .cta.secondary {
     background: transparent;
     color: var(--fg);
     border: 1px solid var(--border);
   }
+  .cta.secondary:hover { border-color: var(--primary); }
+  .cta svg { width: 18px; height: 18px; }
+  .cta .stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding-left: 10px;
+    margin-left: 2px;
+    border-left: 1px solid var(--border);
+    color: var(--muted);
+    font-weight: 400;
+    font-size: 14px;
+  }
 
-  .screenshot { width: 100%; border-radius: 8px; border: 1px solid var(--border); margin: 16px 0; }
+  .mobile-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin: 16px 0 24px;
+  }
+  .mobile-row img { width: 100%; border-radius: 8px; border: 1px solid var(--border); }
+  @media (max-width: 540px) { .mobile-row { grid-template-columns: repeat(2, 1fr); } }
 
-  .features {
-    list-style: none;
-    padding: 0;
+  .feature-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
     margin: 16px 0;
   }
-  .features li {
-    padding: 12px 0;
-    border-top: 1px solid var(--border);
-    display: flex;
-    gap: 16px;
+  @media (max-width: 540px) { .feature-cards { grid-template-columns: 1fr; } }
+  .feature {
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
   }
-  .features li:last-child { border-bottom: 1px solid var(--border); }
-  .features .label { font-weight: 600; min-width: 160px; }
-  .features .desc { color: var(--muted); }
+  .feature h3 { margin: 0 0 6px; font-size: 15px; font-weight: 600; }
+  .feature p { margin: 0; font-size: 14px; color: var(--muted); line-height: 1.5; }
 
   table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 15px; }
   th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
   th { font-weight: 600; }
-  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
   tr:last-child td { font-weight: 600; }
-
-  .mobile-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 16px 0; }
-  .mobile-row img { width: 100%; border-radius: 6px; border: 1px solid var(--border); }
-  @media (max-width: 540px) { .mobile-row { grid-template-columns: repeat(2, 1fr); } }
-
-  pre {
-    background: var(--code-bg);
-    padding: 16px;
-    border-radius: 8px;
-    overflow-x: auto;
-    font-size: 14px;
-    line-height: 1.5;
-  }
 
   .links { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
   @media (max-width: 540px) { .links { grid-template-columns: 1fr; } }
@@ -117,52 +126,19 @@
 <body>
 <main>
   <h1>OpenBSP</h1>
-  <p class="tagline">Open-source WhatsApp Business Platform — connect directly to Meta's Cloud API, no SaaS markup.</p>
-
-  <p class="badges">
-    <a href="https://github.com/matiasbattocchia/open-bsp-api"><img src="https://img.shields.io/github/stars/matiasbattocchia/open-bsp-api?style=flat&label=API%20stars&color=C26A3D" alt="API stars"></a>
-    <a href="https://github.com/matiasbattocchia/open-bsp-ui"><img src="https://img.shields.io/github/stars/matiasbattocchia/open-bsp-ui?style=flat&label=UI%20stars&color=C26A3D" alt="UI stars"></a>
-    <a href="https://unlicense.org/"><img src="https://img.shields.io/badge/license-Unlicense-blue.svg" alt="License: Unlicense"></a>
-    <a href="https://github.com/matiasbattocchia/open-bsp-api/commits/main"><img src="https://img.shields.io/github/last-commit/matiasbattocchia/open-bsp-api" alt="Last commit"></a>
-  </p>
+  <p class="tagline">Open-source WhatsApp Business Platform — connect directly to Meta's Cloud API.</p>
 
   <div class="ctas">
     <a class="cta" href="https://web.openbsp.dev">Try the hosted demo</a>
-    <a class="cta secondary" href="https://github.com/matiasbattocchia/open-bsp-api">View on GitHub</a>
+    <a class="cta secondary" href="https://github.com/matiasbattocchia/open-bsp-api">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      View on GitHub
+      <span class="stars">
+        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" style="width:14px;height:14px;"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"/></svg>
+        <img src="https://img.shields.io/github/stars/matiasbattocchia/open-bsp-api?style=flat&label=&color=transparent&logoColor=999" alt="" style="height:14px; vertical-align:middle;">
+      </span>
+    </a>
   </div>
-
-  <img class="screenshot" src="https://raw.githubusercontent.com/matiasbattocchia/open-bsp-ui/main/screenshot.png" alt="OpenBSP UI screenshot" loading="lazy">
-
-  <h2>What it is</h2>
-
-  <p>OpenBSP connects your stack directly to <strong>Meta's WhatsApp Cloud API</strong>. No third-party BSP between you and Meta. Self-host on Supabase or run the hosted version — same code.</p>
-
-  <ul class="features">
-    <li><span class="label">Self-hostable</span><span class="desc">Fork, set GitHub secrets, run the Release action. Live in under 15 minutes.</span></li>
-    <li><span class="label">Multi-tenant</span><span class="desc">Row-level security, role-based access. Run it for yourself or offer it to clients.</span></li>
-    <li><span class="label">AI-agent ready</span><span class="desc">Decoupled. Plug in any LLM framework via Chat Completions, A2A, or MCP. Built-in MCP server for agentic clients.</span></li>
-    <li><span class="label">Stack</span><span class="desc">TypeScript, Deno Edge Functions, Postgres (Supabase). React + Tailwind on the UI.</span></li>
-    <li><span class="label">License</span><span class="desc">Unlicense (public domain). Use it however you want.</span></li>
-  </ul>
-
-  <h2>Cost compared to a SaaS BSP</h2>
-
-  <p>10,000 messages/month, ~1,000 of them business-initiated (templates that open new conversations — the only type Meta charges for):</p>
-
-  <table>
-    <tr><th></th><th>Twilio</th><th>OpenBSP</th></tr>
-    <tr><td>Platform fee</td><td class="num">$0</td><td class="num">$0</td></tr>
-    <tr><td>Per-message markup</td><td class="num">~$50</td><td class="num">$0</td></tr>
-    <tr><td>Meta conversation fees</td><td class="num">~$30</td><td class="num">~$30</td></tr>
-    <tr><td>Hosting</td><td class="num">$0</td><td class="num">$0</td></tr>
-    <tr><td>Total</td><td class="num">~$80/mo</td><td class="num">~$30/mo</td></tr>
-  </table>
-
-  <p><small>Supabase's free tier covers SMB volumes. Pro ($25/mo) kicks in at higher traffic. You can also self-host Supabase itself, but that's another story.</small></p>
-
-  <h2>Web interface</h2>
-
-  <p>WhatsApp Web-like UX. Conversations, contacts, templates, AI agents, stats. Responsive, dark mode, three languages.</p>
 
   <div class="mobile-row">
     <img src="https://raw.githubusercontent.com/matiasbattocchia/open-bsp-ui/main/screenshots/conversations.png" alt="Conversations" loading="lazy">
@@ -171,16 +147,43 @@
     <img src="https://raw.githubusercontent.com/matiasbattocchia/open-bsp-ui/main/screenshots/template-editor.png" alt="Template editor" loading="lazy">
   </div>
 
-  <h2>Get started</h2>
+  <h2>What it is</h2>
 
-  <ol>
-    <li>Create a Supabase project</li>
-    <li>Fork <a href="https://github.com/matiasbattocchia/open-bsp-api">open-bsp-api</a></li>
-    <li>Configure GitHub Actions secrets</li>
-    <li>Run the <code>Release</code> action</li>
-  </ol>
+  <p>OpenBSP connects your stack directly to <strong>Meta's WhatsApp Cloud API</strong>. No third-party BSP between you and Meta. Self-host on Supabase or run the hosted version — same code.</p>
 
-  <p>Full instructions in the <a href="https://github.com/matiasbattocchia/open-bsp-api#deployment">API repo README</a>.</p>
+  <div class="feature-cards">
+    <div class="feature">
+      <h3>Self-hostable</h3>
+      <p>Fork, set GitHub secrets, run the Release action. Live in under 15 minutes.</p>
+    </div>
+    <div class="feature">
+      <h3>Multi-tenant</h3>
+      <p>Row-level security, role-based access. Run it for yourself or offer it to clients.</p>
+    </div>
+    <div class="feature">
+      <h3>AI-agent ready</h3>
+      <p>Decoupled. Plug in any LLM framework via Chat Completions, A2A, or MCP. Built-in MCP server for agentic clients.</p>
+    </div>
+    <div class="feature">
+      <h3>Open source</h3>
+      <p>TypeScript, Deno Edge Functions, Postgres. Unlicense (public domain) — use it however you want.</p>
+    </div>
+  </div>
+
+  <h2>Cost compared to Twilio</h2>
+
+  <p>10,000 messages/month, ~1,000 of them business-initiated (templates that open new conversations — the only type Meta charges for):</p>
+
+  <table>
+    <tr><th></th><th class="num">Twilio</th><th class="num">OpenBSP</th></tr>
+    <tr><td>Platform fee</td><td class="num">$0</td><td class="num">$0</td></tr>
+    <tr><td>Per-message markup</td><td class="num">~$50</td><td class="num">$0</td></tr>
+    <tr><td>Meta conversation fees</td><td class="num">~$30</td><td class="num">~$30</td></tr>
+    <tr><td>Hosting</td><td class="num">$0</td><td class="num">$0</td></tr>
+    <tr><td>Total</td><td class="num">~$80/mo</td><td class="num">~$30/mo</td></tr>
+  </table>
+
+  <p><small>Supabase's free tier covers SMB volumes. Pro ($25/mo) kicks in at higher traffic. You can also self-host Supabase itself, but that's another story.</small></p>
 
   <h2>Repos</h2>
 
